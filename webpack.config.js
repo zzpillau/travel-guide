@@ -1,4 +1,5 @@
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -32,8 +33,9 @@ export default {
           {
             loader: 'file-loader',
             options: {
-              name: '[path][name].[ext]',
-              outputPath: 'assets/',
+              name: '[name].[ext]',
+              outputPath: 'assets/images/',
+              publicPath: 'assets/images/',
             },
           },
         ],
@@ -44,8 +46,9 @@ export default {
           {
             loader: 'file-loader',
             options: {
-              name: '[path][name].[ext]',
+              name: '[name].[ext]',
               outputPath: 'assets/fonts/',
+              publicPath: 'assets/fonts/',
             },
           },
         ],
@@ -60,6 +63,12 @@ export default {
   plugins: [
     new HtmlWebpackPlugin({
       template: './index.html',
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'src/assets/images', to: 'assets/images' },
+        { from: 'src/assets/fonts', to: 'assets/fonts' },
+      ],
     }),
   ],
 };
